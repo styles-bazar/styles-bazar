@@ -18,58 +18,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://styles-bazar.vercel.app"),
-
   title: {
-    default: "Styles Bazar | Pakistan Online Shopping Store",
+    default: "Styles Bazar",
     template: "%s | Styles Bazar",
   },
-
   description:
-    "Styles Bazar is Pakistan's online shopping store for Clothing, Shoes, Watches, Perfumes, Beauty Products and more with Cash on Delivery.",
-
+    "Pakistan's online shopping store for clothes, shoes, watches, perfumes and more.",
   keywords: [
+    "Pakistan online shopping",
     "Styles Bazar",
-    "Online Shopping Pakistan",
-    "Pakistan Shopping",
-    "Clothes Pakistan",
-    "Shoes Pakistan",
-    "Perfume Pakistan",
-    "Watches Pakistan",
-    "Beauty Products",
-    "Cash on Delivery Pakistan",
+    "Clothes",
+    "Shoes",
+    "Perfumes",
+    "Watches",
   ],
 
-  authors: [{ name: "Styles Bazar" }],
-
-  creator: "Styles Bazar",
-
-  publisher: "Styles Bazar",
+  verification: {
+    google: "TyXrrIEqPppIZRGx69QM2g7ofr-RxMTFy3iGaFEyGZ0",
+  },
 
   robots: {
     index: true,
     follow: true,
-  },
-
-  openGraph: {
-    title: "Styles Bazar",
-    description:
-      "Pakistan's Online Shopping Store for Clothing, Shoes, Watches, Perfumes and Beauty Products.",
-    url: "https://styles-bazar.vercel.app",
-    siteName: "Styles Bazar",
-    locale: "en_PK",
-    type: "website",
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Styles Bazar",
-    description:
-      "Pakistan's Online Shopping Store for Clothing, Shoes, Watches and Beauty Products.",
-  },
-
-  icons: {
-    icon: "/favicon.ico",
   },
 };
 
@@ -79,19 +49,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-  <SearchProvider>
-    <WishlistProvider>
-      <CartProvider>
-        {children}
-      </CartProvider>
-    </WishlistProvider>
-  </SearchProvider>
-</body>
+    <html lang="en">
+      <body>
+        <SearchProvider>
+          <WishlistProvider>
+            <CartProvider>{children}</CartProvider>
+          </WishlistProvider>
+        </SearchProvider>
+      </body>
     </html>
   );
 }
