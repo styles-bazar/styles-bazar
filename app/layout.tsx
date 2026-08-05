@@ -18,19 +18,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://styles-bazar.vercel.app"),
+
   title: {
     default: "Styles Bazar",
     template: "%s | Styles Bazar",
   },
+
   description:
-    "Pakistan's online shopping store for clothes, shoes, watches, perfumes and more.",
+    "Pakistan's Online Shopping Store for Clothes, Shoes, Watches, Perfumes and Fashion Accessories.",
+
   keywords: [
-    "Pakistan online shopping",
+    "Pakistan Online Shopping",
     "Styles Bazar",
     "Clothes",
     "Shoes",
     "Perfumes",
     "Watches",
+    "Fashion",
+    "Online Store",
   ],
 
   verification: {
@@ -40,6 +46,32 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+
+  openGraph: {
+    title: "Styles Bazar",
+    description:
+      "Pakistan's Online Shopping Store for Clothes, Shoes, Watches and Perfumes.",
+    url: "https://styles-bazar.vercel.app",
+    siteName: "Styles Bazar",
+    locale: "en_PK",
+    type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Styles Bazar",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Styles Bazar",
+    description:
+      "Pakistan's Online Shopping Store for Clothes, Shoes, Watches and Perfumes.",
+    images: ["/logo.png"],
   },
 };
 
