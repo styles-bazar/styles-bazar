@@ -7,7 +7,6 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import OfferCards from "@/components/OfferCards";
 import TopCategories from "@/components/TopCategories";
-import FlashSale from "@/components/FlashSale";
 import TrendingProducts from "@/components/TrendingProducts";
 import TodayDeals from "@/components/TodayDeals";
 import FeaturedBrands from "@/components/FeaturedBrands";
@@ -26,8 +25,6 @@ export default function Home() {
 
 
       <TopCategories />
-
-      <FlashSale />
 
       <TrendingProducts />
 
