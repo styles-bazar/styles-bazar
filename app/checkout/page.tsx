@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { placeOrder } from "@/lib/productService";
+import { saveOrder } from "@/lib/orderService";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -35,7 +35,7 @@ export default function CheckoutPage() {
       return;
     }
 
-    await placeOrder({
+    await saveOrder({
       customerName: name,
       customerPhone: phone,
       customerCity: city,
