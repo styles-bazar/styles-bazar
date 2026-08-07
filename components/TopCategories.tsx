@@ -39,37 +39,54 @@ export default function TopCategories() {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto mt-10 px-4">
-      <div className="bg-white rounded-2xl shadow p-6">
+    <section className="py-10 px-4">
+      <div className="max-w-7xl mx-auto">
 
-        <h2 className="text-3xl font-bold mb-8">
-          Shop By Category
-        </h2>
+        <div className="flex items-center justify-between mb-7">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+            Shop By Category
+          </h2>
+
+          <Link
+            href="/products"
+            className="text-orange-600 font-semibold hover:underline"
+          >
+            View All →
+          </Link>
+        </div>
 
         {categories.length === 0 ? (
-          <div className="text-center py-10 text-gray-500 font-semibold">
-            No Categories Found
+          <div className="bg-white rounded-2xl p-10 text-center shadow-sm">
+            <p className="text-gray-500 font-semibold">
+              No Categories Found
+            </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
 
             {categories.map((category) => (
               <Link
-                href={`/category/${category.name}`}
+                href={`/category/${encodeURIComponent(category.name)}`}
                 key={category.name}
                 className="group"
               >
-                <div className="bg-white rounded-2xl shadow hover:shadow-xl transition p-4 flex flex-col items-center">
+                <div className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 text-center">
 
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-24 h-24 rounded-full object-cover border group-hover:scale-110 duration-300"
-                  />
+                  <div className="w-24 h-24 mx-auto rounded-full overflow-hidden bg-gray-100">
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
 
-                  <h3 className="mt-4 font-bold text-center">
+                  <h3 className="mt-4 font-bold text-gray-800 capitalize line-clamp-1">
                     {category.name}
                   </h3>
+
+                  <p className="text-sm text-orange-600 mt-1">
+                    Shop Now →
+                  </p>
 
                 </div>
               </Link>

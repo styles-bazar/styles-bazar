@@ -13,29 +13,68 @@ import FeaturedBrands from "@/components/FeaturedBrands";
 
 export default function Home() {
   return (
-    <main className="bg-[#f5f5f5] min-h-screen">
+    <div className="min-h-screen bg-gray-100">
 
       <Navbar />
 
-      <Hero />
+      <main>
 
-<Features />
+        {/* Hero Banner */}
+        <section className="px-4 pt-4">
+          <div className="max-w-7xl mx-auto">
+            <Hero />
+          </div>
+        </section>
 
-<OfferCards />
+        {/* Features */}
+        <section className="px-4 py-8">
+          <div className="max-w-7xl mx-auto">
+            <Features />
+          </div>
+        </section>
 
+        {/* Categories */}
+        <TopCategories />
 
-      <TopCategories />
+        {/* Special Offers */}
+        <section className="px-4 py-4">
+          <div className="max-w-7xl mx-auto">
+            <OfferCards />
+          </div>
+        </section>
 
-      <TrendingProducts />
+        {/* Trending Products */}
+        <section className="px-4 py-6">
+          <div className="max-w-7xl mx-auto">
+            <TrendingProducts />
+          </div>
+        </section>
 
-      <FeaturedProducts />
+        {/* Featured Products */}
+        <section className="px-4 py-6">
+          <div className="max-w-7xl mx-auto">
+            <FeaturedProducts />
+          </div>
+        </section>
 
-      <TodayDeals />
+        {/* Today's Deals */}
+        <section className="px-4 py-6">
+          <div className="max-w-7xl mx-auto">
+            <TodayDeals />
+          </div>
+        </section>
 
-      <FeaturedBrands />
+        {/* Brands */}
+        <section className="px-4 py-6 pb-12">
+          <div className="max-w-7xl mx-auto">
+            <FeaturedBrands />
+          </div>
+        </section>
+
+      </main>
 
       <Footer />
 
-    </main>
+    </div>
   );
 }

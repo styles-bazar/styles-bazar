@@ -10,8 +10,6 @@ export default function FeaturedProducts() {
   useEffect(() => {
     async function loadProducts() {
       const data = await getProducts();
-
-      // صرف پہلے 8 Products
       setProducts(data.slice(0, 8));
     }
 
@@ -19,63 +17,63 @@ export default function FeaturedProducts() {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 mt-14">
+    <section className="py-10 px-4">
+      <div className="max-w-7xl mx-auto">
 
-      <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900">
+            ⭐ Featured Products
+          </h2>
 
-        <h2 className="text-3xl font-bold">
-          ⭐ Featured Products
-        </h2>
-
-        <Link
-          href="/products"
-          className="text-orange-600 font-bold hover:underline"
-        >
-          View All →
-        </Link>
-
-      </div>
-
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-        {products.map((product) => (
-
-          <div
-            key={product.id}
-            className="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden"
+          <Link
+            href="/products"
+            className="text-orange-600 font-bold hover:underline"
           >
+            View All →
+          </Link>
+        </div>
 
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-60 object-cover"
-            />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-            <div className="p-4">
+          {products.map((product) => (
 
-              <h3 className="font-bold line-clamp-2">
-                {product.name}
-              </h3>
+            <div
+              key={product.id}
+              className="bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden"
+            >
 
-              <p className="text-orange-600 text-2xl font-bold mt-3">
-                Rs. {product.price}
-              </p>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-60 object-cover"
+              />
 
-              <Link
-                href={`/product/${product.id}`}
-                className="block mt-4 bg-orange-600 hover:bg-orange-700 text-white text-center py-3 rounded-xl"
-              >
-                View Product
-              </Link>
+              <div className="p-4">
+
+                <h3 className="font-bold text-gray-900 line-clamp-2">
+                  {product.name}
+                </h3>
+
+                <p className="text-orange-600 text-2xl font-bold mt-3">
+                  Rs. {product.price}
+                </p>
+
+                <Link
+                  href={`/product/${product.id}`}
+                  className="block mt-4 bg-orange-600 hover:bg-orange-700 text-white text-center py-3 rounded-xl"
+                >
+                  View Product
+                </Link>
+
+              </div>
 
             </div>
 
-          </div>
+          ))}
 
-        ))}
+        </div>
 
       </div>
-
     </section>
   );
 }

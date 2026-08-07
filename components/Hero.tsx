@@ -30,48 +30,49 @@ const banners = [
 
 export default function Hero() {
   return (
-    <section className="max-w-7xl mx-auto mt-6 px-4">
-
+    <section className="max-w-7xl mx-auto px-4 py-6">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000 }}
-        loop
+        loop={true}
         className="rounded-3xl overflow-hidden shadow-xl"
       >
         {banners.map((banner, index) => (
           <SwiperSlide key={index}>
-
             <div className="relative">
 
+              {/* Banner Image */}
               <img
                 src={banner.image}
+                alt={banner.title}
                 className="w-full h-[500px] object-cover"
               />
 
-              <div className="absolute inset-0 bg-black/40 flex flex-col justify-center pl-20">
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-black/40" />
 
-                <h1 className="text-6xl font-bold text-white">
+              {/* Hero Text */}
+              <div className="absolute inset-0 flex flex-col justify-center pl-10 md:pl-20">
+
+                <h1 className="hero-title text-4xl md:text-6xl font-bold">
                   {banner.title}
                 </h1>
 
-                <p className="text-2xl text-white mt-5">
+                <p className="hero-subtitle text-xl md:text-2xl mt-5">
                   {banner.subtitle}
                 </p>
 
-                <button className="mt-8 bg-orange-600 hover:bg-orange-700 text-white w-52 h-14 rounded-xl text-xl font-bold">
+                <button className="mt-8 bg-orange-600 hover:bg-orange-700 text-white w-52 h-14 rounded-xl text-xl font-bold transition">
                   Shop Now
                 </button>
 
               </div>
-
             </div>
-
           </SwiperSlide>
         ))}
       </Swiper>
-
     </section>
   );
 }

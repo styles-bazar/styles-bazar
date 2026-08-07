@@ -12,15 +12,70 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Basic Reset */
+* {
+  box-sizing: border-box;
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: #171717;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Make product card text readable */
+.product-card {
+  color: #171717;
+}
+
+/* Product titles */
+.product-card h2,
+.product-card h3,
+.product-card p {
+  color: #171717;
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+  color: #171717;
+  background-color: #ffffff;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+}
+
+/*
+  IMPORTANT:
+  Do NOT use:
+  a { color: inherit; }
+  h1, h2, h3... { color: inherit; }
+
+  These can override Tailwind text colors
+  such as text-orange-600 and text-white.
+*/
+
+/* Logo */
+.site-logo {
+  color: #ea580c;
+}
+
+/* Hero text */
+.hero-title {
+  color: #ffffff;
+}
+
+.hero-subtitle {
+  color: #ffffff;
 }

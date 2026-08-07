@@ -32,31 +32,31 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-10">
+    <section className="py-10 px-4">
+      <div className="max-w-7xl mx-auto">
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          {features.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 text-center group"
+            >
+              <div className="w-16 h-16 mx-auto rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-3xl group-hover:bg-orange-600 group-hover:text-white transition">
+                {item.icon}
+              </div>
 
-        {features.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 text-center group"
-          >
-            <div className="w-16 h-16 mx-auto rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-3xl group-hover:bg-orange-600 group-hover:text-white transition">
-              {item.icon}
+              <h3 className="mt-5 text-xl font-bold text-gray-900">
+                {item.title}
+              </h3>
+
+              <p className="text-gray-500 mt-2 text-sm">
+                {item.text}
+              </p>
             </div>
-
-            <h3 className="mt-5 text-xl font-bold">
-              {item.title}
-            </h3>
-
-            <p className="text-gray-500 mt-2 text-sm">
-              {item.text}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
 
       </div>
-
     </section>
   );
 }

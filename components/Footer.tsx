@@ -10,131 +10,201 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white mt-20">
+    <footer className="bg-[#111827] text-white mt-16">
 
-      <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-6 py-14">
 
-        {/* Logo */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
 
-        <div>
+          {/* Brand */}
+          <div>
+            <h2 className="text-3xl font-bold text-orange-500">
+              Styles Bazar
+            </h2>
 
-          <h2 className="text-3xl font-bold text-orange-500">
-            Styles Bazar
-          </h2>
-
-          <p className="mt-4 text-gray-400 leading-7">
-            Styles Bazar is your trusted online shopping destination in
-            Pakistan. We provide quality products at affordable prices.
-          </p>
-
-        </div>
-
-        {/* Quick Links */}
-
-        <div>
-
-          <h3 className="font-bold text-xl mb-4">
-            Quick Links
-          </h3>
-
-          <div className="space-y-3 flex flex-col">
-
-            <Link href="/">Home</Link>
-
-            <Link href="/about">About Us</Link>
-
-            <Link href="/contact">Contact Us</Link>
-
-            <Link href="/cart">Cart</Link>
-
+            <p className="text-gray-400 mt-5 leading-7">
+              Styles Bazar is your trusted online shopping destination
+              in Pakistan. We provide quality products at affordable prices.
+            </p>
           </div>
 
-        </div>
 
-        {/* Policies */}
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-xl font-bold mb-5">
+              Quick Links
+            </h3>
 
-        <div>
+            <div className="flex flex-col gap-4 text-gray-300">
 
-          <h3 className="font-bold text-xl mb-4">
-            Policies
-          </h3>
+              <Link
+                href="/"
+                className="hover:text-orange-500 transition"
+              >
+                Home
+              </Link>
 
-          <div className="space-y-3 flex flex-col">
+              <Link
+                href="/about"
+                className="hover:text-orange-500 transition"
+              >
+                About Us
+              </Link>
 
-            <Link href="/privacy-policy">
-              Privacy Policy
-            </Link>
+              <Link
+                href="/contact"
+                className="hover:text-orange-500 transition"
+              >
+                Contact Us
+              </Link>
 
-            <Link href="/terms">
-              Terms & Conditions
-            </Link>
+              <Link
+                href="/cart"
+                className="hover:text-orange-500 transition"
+              >
+                Cart
+              </Link>
 
-            <Link href="/shipping-policy">
-              Shipping Policy
-            </Link>
-
-            <Link href="/refund-policy">
-              Refund Policy
-            </Link>
-
+            </div>
           </div>
 
-        </div>
 
-        {/* Contact */}
+          {/* Policies */}
+          <div>
+            <h3 className="text-xl font-bold mb-5">
+              Policies
+            </h3>
 
-        <div>
+            <div className="flex flex-col gap-4 text-gray-300">
 
-          <h3 className="font-bold text-xl mb-4">
-            Contact
-          </h3>
+              <Link
+                href="/privacy-policy"
+                className="hover:text-orange-500 transition"
+              >
+                Privacy Policy
+              </Link>
 
-          <p className="mb-2">
-            📧 support@stylesbazar.com
-          </p>
+              <Link
+                href="/terms"
+                className="hover:text-orange-500 transition"
+              >
+                Terms & Conditions
+              </Link>
 
-          <p className="mb-4">
-            📱 +92 335 6891247
-          </p>
+              <Link
+                href="/shipping-policy"
+                className="hover:text-orange-500 transition"
+              >
+                Shipping Policy
+              </Link>
 
-          <div className="flex gap-5 text-3xl">
+              <Link
+                href="/contact"
+                className="hover:text-orange-500 transition"
+              >
+                Refund Policy
+              </Link>
 
-            <a
-              href="https://facebook.com"
-              target="_blank"
-            >
-              <FaFacebook className="hover:text-blue-500" />
-            </a>
+            </div>
+          </div>
 
-            <a
-              href="https://instagram.com"
-              target="_blank"
-            >
-              <FaInstagram className="hover:text-pink-500" />
-            </a>
 
-            <a
-              href="https://wa.me/923356891247"
-              target="_blank"
-            >
-              <FaWhatsapp className="hover:text-green-500" />
-            </a>
+          {/* Contact */}
+          <div>
+            <h3 className="text-xl font-bold mb-5">
+              Contact
+            </h3>
 
-            <a
-              href="mailto:support@stylesbazar.com"
-            >
-              <FaEnvelope className="hover:text-orange-500" />
-            </a>
+            <div className="space-y-4 text-gray-300">
 
+              {/* Email */}
+              <a
+                href="mailto:stylesbazar247@gmail.com"
+                className="flex items-center gap-3 hover:text-orange-500 transition"
+              >
+                <FaEnvelope className="text-xl" />
+                <span>stylesbazar247@gmail.com</span>
+              </a>
+
+
+              {/* Phone */}
+              <a
+                href="tel:+923356891247"
+                className="flex items-center gap-3 hover:text-orange-500 transition"
+              >
+                <span className="text-xl">📱</span>
+                <span>+92 335 6891247</span>
+              </a>
+
+
+              {/* Social Media */}
+              <div className="flex items-center gap-6 pt-3">
+
+                {/* Facebook */}
+                <a
+                  href="https://www.facebook.com/share/1JLjxXFNHT/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="text-3xl hover:text-orange-500 transition"
+                >
+                  <FaFacebook />
+                </a>
+
+
+                {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/stylesbazar247?igsh=MXI0M3dsMHJtamljNQ=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="text-3xl hover:text-orange-500 transition"
+                >
+                  <FaInstagram />
+                </a>
+
+
+                {/* WhatsApp */}
+                <a
+                  href="https://wa.me/923356891247"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  className="text-3xl hover:text-orange-500 transition"
+                >
+                  <FaWhatsapp />
+                </a>
+
+
+                {/* Email */}
+                <a
+                  href="mailto:stylesbazar247@gmail.com"
+                  aria-label="Email"
+                  className="text-3xl hover:text-orange-500 transition"
+                >
+                  <FaEnvelope />
+                </a>
+
+              </div>
+
+            </div>
           </div>
 
         </div>
 
       </div>
 
-      <div className="border-t border-gray-700 py-6 text-center text-gray-400">
 
-        © 2026 Styles Bazar. All Rights Reserved.
+      {/* Bottom */}
+      <div className="border-t border-gray-700">
+
+        <div className="max-w-7xl mx-auto px-6 py-6 text-center">
+
+          <p className="text-gray-400">
+            © 2026 Styles Bazar. All Rights Reserved.
+          </p>
+
+        </div>
 
       </div>
 
