@@ -171,19 +171,54 @@ export default function Navbar() {
 
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenu(!mobileMenu)}
-            aria-label="Toggle menu"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-gray-300 transition hover:border-orange-500/40 hover:bg-orange-500/10 hover:text-orange-500 sm:hidden"
-          >
-            {mobileMenu ? (
-              <FaTimes />
-            ) : (
-              <FaBars />
-            )}
-          </button>
+          {/* Mobile Actions */}
+<div className="flex shrink-0 items-center gap-2 sm:hidden">
+
+  {/* Wishlist */}
+  <Link
+    href="/wishlist"
+    aria-label="Wishlist"
+    className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-gray-300 transition-all duration-300 hover:border-orange-500/40 hover:bg-orange-500/10 hover:text-orange-500"
+  >
+    <FaHeart className="text-sm transition-transform group-hover:scale-110" />
+
+    {wishlist.length > 0 && (
+      <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500 px-1 text-[9px] font-black text-white shadow-lg">
+        {wishlist.length}
+      </span>
+    )}
+  </Link>
+
+  {/* Cart */}
+  <Link
+    href="/cart"
+    aria-label="Cart"
+    className="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-gray-300 transition-all duration-300 hover:border-orange-500/40 hover:bg-orange-500/10 hover:text-orange-500"
+  >
+    <FaShoppingCart className="text-sm transition-transform group-hover:scale-110" />
+
+    {cart.length > 0 && (
+      <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500 px-1 text-[9px] font-black text-white shadow-lg">
+        {cart.length}
+      </span>
+    )}
+  </Link>
+
+  {/* Menu */}
+  <button
+    type="button"
+    onClick={() => setMobileMenu(!mobileMenu)}
+    aria-label="Toggle menu"
+    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-gray-300 transition hover:border-orange-500/40 hover:bg-orange-500/10 hover:text-orange-500"
+  >
+    {mobileMenu ? (
+      <FaTimes />
+    ) : (
+      <FaBars />
+    )}
+  </button>
+
+</div>
 
         </div>
 

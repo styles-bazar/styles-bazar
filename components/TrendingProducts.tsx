@@ -105,13 +105,15 @@ export default function TrendingProducts() {
             </p>
           </div>
 
-          <Link
-            href="/products"
-            className="hidden items-center gap-2 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-3 text-sm font-bold text-gray-300 transition-all duration-300 hover:border-orange-500/40 hover:bg-orange-500/10 hover:text-orange-500 sm:flex"
-          >
-            Explore All
-            <FaArrowRight className="text-xs" />
-          </Link>
+          {!loading && filteredProducts.length > 0 && (
+  <Link
+    href="/products"
+    className="mt-7 flex items-center justify-center gap-2 rounded-xl border border-orange-500/30 bg-orange-500/5 py-4 text-sm font-bold text-orange-500 transition hover:bg-orange-500 hover:text-white sm:hidden"
+  >
+    Explore All Products
+    <FaArrowRight className="text-xs" />
+  </Link>
+)}
         </div>
 
         {/* Loading */}
@@ -167,7 +169,7 @@ export default function TrendingProducts() {
         {!loading && !error && filteredProducts.length > 0 && (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 
-            {filteredProducts.slice(0, 10).map((product, index) => {
+            {filteredProducts.map((product, index) => {
               const saved = isInWishlist(product.id);
 
               return (
