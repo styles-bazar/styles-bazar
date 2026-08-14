@@ -42,13 +42,8 @@ type Product = {
   oldPrice?: number;
   discount?: number;
   description?: string;
-
   image?: string;
-
-  // New product system
   media?: ProductMedia[];
-
-  // Old product system
   images?: string[];
 };
 
@@ -58,26 +53,16 @@ export default function ProductClient({
   product: Product;
 }) {
   const [quantity, setQuantity] = useState(1);
-
-  const [showOrderForm, setShowOrderForm] =
-    useState(false);
-
-  const [shareMessage, setShareMessage] =
-    useState("");
-
-  const [activeImage, setActiveImage] =
-    useState(0);
+  const [showOrderForm, setShowOrderForm] = useState(false);
+  const [shareMessage, setShareMessage] = useState("");
+  const [activeImage, setActiveImage] = useState(0);
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
 
-  const {
-    addToWishlist,
-    isInWishlist,
-  } = useWishlist();
-
+  const { addToWishlist, isInWishlist } = useWishlist();
   const { addToCart } = useCart();
 
   const saved = isInWishlist(product.id);
@@ -85,20 +70,11 @@ export default function ProductClient({
   // =====================================================
   // PRODUCT IMAGES
   // =====================================================
-  // Priority:
-  // 1. media -> new products
-  // 2. images -> old products
-  // 3. image -> single image products
-  // =====================================================
 
-  const productImages: string[] = Array.isArray(
-    product.media
-  )
+  const productImages: string[] = Array.isArray(product.media)
     ? product.media
         .map((item) =>
-          typeof item === "string"
-            ? item
-            : item?.url || ""
+          typeof item === "string" ? item : item?.url || ""
         )
         .filter(Boolean)
     : Array.isArray(product.images)
@@ -122,9 +98,7 @@ export default function ProductClient({
   }
 
   function decreaseQuantity() {
-    setQuantity((current) =>
-      Math.max(1, current - 1)
-    );
+    setQuantity((current) => Math.max(1, current - 1));
   }
 
   // =====================================================
@@ -135,9 +109,7 @@ export default function ProductClient({
     if (productImages.length <= 1) return;
 
     setActiveImage((current) =>
-      current >= productImages.length - 1
-        ? 0
-        : current + 1
+      current >= productImages.length - 1 ? 0 : current + 1
     );
   }
 
@@ -145,9 +117,7 @@ export default function ProductClient({
     if (productImages.length <= 1) return;
 
     setActiveImage((current) =>
-      current <= 0
-        ? productImages.length - 1
-        : current - 1
+      current <= 0 ? productImages.length - 1 : current - 1
     );
   }
 
@@ -161,19 +131,16 @@ export default function ProductClient({
 
   const calculatedDiscount =
     product.oldPrice &&
-    Number(product.oldPrice) >
-      Number(product.price)
+    Number(product.oldPrice) > Number(product.price)
       ? Math.round(
-          ((Number(product.oldPrice) -
-            Number(product.price)) /
+          ((Number(product.oldPrice) - Number(product.price)) /
             Number(product.oldPrice)) *
             100
         )
       : 0;
 
   const discount =
-    product.discount &&
-    Number(product.discount) > 0
+    product.discount && Number(product.discount) > 0
       ? Number(product.discount)
       : calculatedDiscount;
 
@@ -181,9 +148,7 @@ export default function ProductClient({
   // TOTAL
   // =====================================================
 
-  const totalPrice =
-    Number(product.price || 0) *
-    quantity;
+  const totalPrice = Number(product.price || 0) * quantity;
 
   // =====================================================
   // ADD TO CART
@@ -192,9 +157,7 @@ export default function ProductClient({
   function handleAddToCart() {
     addToCart(product, quantity);
 
-    alert(
-      "Product added to cart successfully!"
-    );
+    alert("Product added to cart successfully!");
   }
 
   // =====================================================
@@ -212,11 +175,9 @@ export default function ProductClient({
   async function handleShare() {
     const shareData = {
       title: product.name,
-
       text: `Check out ${product.name} on Styles Bazar - Rs. ${Number(
         product.price || 0
       ).toLocaleString()}`,
-
       url: window.location.href,
     };
 
@@ -224,30 +185,22 @@ export default function ProductClient({
       if (navigator.share) {
         await navigator.share(shareData);
       } else if (navigator.clipboard) {
-        await navigator.clipboard.writeText(
-          window.location.href
-        );
+        await navigator.clipboard.writeText(window.location.href);
 
-        setShareMessage(
-          "Product link copied!"
-        );
+        setShareMessage("Product link copied!");
 
         setTimeout(() => {
           setShareMessage("");
         }, 2500);
       } else {
-        setShareMessage(
-          "Copy this page link to share."
-        );
+        setShareMessage("Copy this page link to share.");
 
         setTimeout(() => {
           setShareMessage("");
         }, 2500);
       }
     } catch {
-      console.log(
-        "Share cancelled"
-      );
+      console.log("Share cancelled");
     }
   }
 
@@ -255,9 +208,7 @@ export default function ProductClient({
   // WHATSAPP ORDER
   // =====================================================
 
-  function handleWhatsAppOrder(
-    e: React.FormEvent
-  ) {
+  function handleWhatsAppOrder(e: React.FormEvent) {
     e.preventDefault();
 
     if (
@@ -266,19 +217,14 @@ export default function ProductClient({
       !city.trim() ||
       !address.trim()
     ) {
-      alert(
-        "Please fill all the required fields."
-      );
-
+      alert("Please fill all the required fields.");
       return;
     }
 
-    const whatsappNumber =
-      "923356891247";
+    const whatsappNumber = "923356891247";
 
-    const message =
-      encodeURIComponent(
-        `Assalam o Alaikum! 👋
+    const message = encodeURIComponent(
+      `Assalam o Alaikum! 👋
 
 Mujhe ye product order karna hai.
 
@@ -288,9 +234,7 @@ Mujhe ye product order karna hai.
 
 Product: ${product.name}
 Product ID: ${product.id}
-Price: Rs. ${Number(
-          product.price || 0
-        ).toLocaleString()}
+Price: Rs. ${Number(product.price || 0).toLocaleString()}
 Quantity: ${quantity}
 Total: Rs. ${totalPrice.toLocaleString()}
 
@@ -306,7 +250,7 @@ Address: ${address}
 Payment: Cash on Delivery
 
 Please confirm my order. Thank you!`
-      );
+    );
 
     window.open(
       `https://wa.me/${whatsappNumber}?text=${message}`,
@@ -317,11 +261,8 @@ Please confirm my order. Thank you!`
   }
 
   return (
-    <main className="min-h-screen">
-      {/* =====================================================
-          BACKGROUND
-      ===================================================== */}
-
+    <main className="min-h-screen pb-28 lg:pb-0">
+      {/* Background Glow */}
       <div className="pointer-events-none fixed bottom-[-180px] right-[-180px] h-[400px] w-[400px] rounded-full bg-orange-500/[0.04] blur-[120px]" />
 
       <div className="relative mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
@@ -331,7 +272,6 @@ Please confirm my order. Thank you!`
         ===================================================== */}
 
         <div className="mb-7 flex items-center justify-between gap-4">
-
           <Link
             href="/products"
             className="group inline-flex items-center gap-3 text-sm font-bold text-gray-500 transition hover:text-orange-500"
@@ -340,20 +280,23 @@ Please confirm my order. Thank you!`
               <FaArrowLeft className="text-xs" />
             </span>
 
-            Back to Products
+            <span className="hidden xs:inline">
+              Back to Products
+            </span>
+
+            <span className="xs:hidden">
+              Products
+            </span>
           </Link>
 
           {/* SHARE */}
-
           <div className="relative">
-
             <button
               type="button"
               onClick={handleShare}
               className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-xs font-black text-gray-400 transition-all duration-300 hover:border-orange-500/40 hover:bg-orange-500/10 hover:text-orange-500"
             >
               <FaShareAlt />
-
               Share
             </button>
 
@@ -362,9 +305,7 @@ Please confirm my order. Thank you!`
                 {shareMessage}
               </div>
             )}
-
           </div>
-
         </div>
 
         {/* =====================================================
@@ -378,18 +319,13 @@ Please confirm my order. Thank you!`
           ===================================================== */}
 
           <div>
-
             <div className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-[#101010] shadow-[0_30px_90px_rgba(0,0,0,0.5)]">
-
               <div className="relative aspect-square overflow-hidden sm:aspect-[4/4.4]">
 
                 {currentImage ? (
                   <img
                     src={currentImage}
-                    alt={
-                      product.name ||
-                      "Product"
-                    }
+                    alt={product.name || "Product"}
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.02]"
                   />
                 ) : (
@@ -400,36 +336,27 @@ Please confirm my order. Thank you!`
 
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
 
-                {/* FEATURED */}
-
-                <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full border border-orange-500/30 bg-black/70 px-4 py-2 backdrop-blur-xl">
-
+                {/* Featured */}
+                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-orange-500/30 bg-black/70 px-3 py-2 backdrop-blur-xl sm:left-5 sm:top-5 sm:px-4">
                   <FaBolt className="text-[9px] text-orange-500" />
 
-                  <span className="text-[9px] font-black uppercase tracking-[0.2em] text-orange-400">
+                  <span className="text-[8px] font-black uppercase tracking-[0.2em] text-orange-400 sm:text-[9px]">
                     Featured
                   </span>
-
                 </div>
 
-                {/* DISCOUNT */}
-
+                {/* Discount */}
                 {discount > 0 && (
-                  <div className="absolute bottom-5 left-5 rounded-full bg-orange-500 px-4 py-2 text-[10px] font-black uppercase tracking-wider text-white shadow-lg">
+                  <div className="absolute bottom-4 left-4 rounded-full bg-orange-500 px-3 py-2 text-[9px] font-black uppercase tracking-wider text-white shadow-lg sm:bottom-5 sm:left-5 sm:px-4 sm:text-[10px]">
                     {discount}% OFF
                   </div>
                 )}
 
-                {/* WISHLIST */}
-
+                {/* Wishlist */}
                 <button
                   type="button"
-                  onClick={() =>
-                    addToWishlist(
-                      product
-                    )
-                  }
-                  className={`absolute right-5 top-5 flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur-xl transition-all ${
+                  onClick={() => addToWishlist(product)}
+                  className={`absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-xl transition-all sm:right-5 sm:top-5 sm:h-12 sm:w-12 ${
                     saved
                       ? "border-red-500 bg-red-500 text-white"
                       : "border-white/10 bg-black/60 text-white hover:border-orange-500 hover:bg-orange-500"
@@ -439,98 +366,71 @@ Please confirm my order. Thank you!`
                   <FaHeart className="text-sm" />
                 </button>
 
-                {/* PREVIOUS */}
-
-                {productImages.length >
-                  1 && (
+                {/* Previous */}
+                {productImages.length > 1 && (
                   <button
                     type="button"
-                    onClick={
-                      previousImage
-                    }
-                    className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 text-white backdrop-blur-md transition hover:bg-orange-500"
+                    onClick={previousImage}
+                    className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 text-white backdrop-blur-md transition hover:bg-orange-500 sm:left-4 sm:h-11 sm:w-11"
                     aria-label="Previous image"
                   >
-                    <FaChevronLeft className="text-xs" />
+                    <FaChevronLeft className="text-[10px] sm:text-xs" />
                   </button>
                 )}
 
-                {/* NEXT */}
-
-                {productImages.length >
-                  1 && (
+                {/* Next */}
+                {productImages.length > 1 && (
                   <button
                     type="button"
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 text-white backdrop-blur-md transition hover:bg-orange-500"
+                    className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/60 text-white backdrop-blur-md transition hover:bg-orange-500 sm:right-4 sm:h-11 sm:w-11"
                     aria-label="Next image"
                   >
-                    <FaChevronRight className="text-xs" />
+                    <FaChevronRight className="text-[10px] sm:text-xs" />
                   </button>
                 )}
 
-                {/* COUNTER */}
-
-                {productImages.length >
-                  1 && (
-                  <div className="absolute bottom-5 right-5 rounded-full border border-white/10 bg-black/60 px-3 py-2 text-[10px] font-black text-white backdrop-blur-md">
-                    {activeImage + 1} /{" "}
-                    {productImages.length}
+                {/* Counter */}
+                {productImages.length > 1 && (
+                  <div className="absolute bottom-4 right-4 rounded-full border border-white/10 bg-black/60 px-3 py-2 text-[9px] font-black text-white backdrop-blur-md sm:bottom-5 sm:right-5 sm:text-[10px]">
+                    {activeImage + 1} / {productImages.length}
                   </div>
                 )}
-
               </div>
             </div>
 
             {/* =====================================================
-                THUMBNAILS
+                SMALLER THUMBNAILS
             ===================================================== */}
 
             {productImages.length > 1 && (
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+              <div className="mt-4 flex justify-center gap-2 overflow-x-auto px-1 pb-1 sm:justify-start sm:gap-3">
+                {productImages.slice(0, 5).map((img, index) => (
+                  <button
+                    key={`${img}-${index}`}
+                    type="button"
+                    onClick={() => selectImage(index)}
+                    className={`relative h-[62px] w-[62px] shrink-0 overflow-hidden rounded-xl border-2 transition-all sm:h-20 sm:w-20 sm:rounded-2xl ${
+                      activeImage === index
+                        ? "border-orange-500 shadow-[0_10px_30px_rgba(249,115,22,0.18)]"
+                        : "border-white/10 opacity-70 hover:border-orange-500/40 hover:opacity-100"
+                    }`}
+                  >
+                    <img
+                      src={img}
+                      alt={`${product.name} ${index + 1}`}
+                      className="h-full w-full object-cover"
+                    />
 
-                {productImages
-                  .slice(0, 5)
-                  .map(
-                    (
-                      img,
-                      index
-                    ) => (
-                      <button
-                        key={`${img}-${index}`}
-                        type="button"
-                        onClick={() =>
-                          selectImage(
-                            index
-                          )
-                        }
-                        className={`relative aspect-square overflow-hidden rounded-2xl border-2 transition-all ${
-                          activeImage ===
-                          index
-                            ? "border-orange-500 shadow-[0_10px_30px_rgba(249,115,22,0.18)]"
-                            : "border-white/10 opacity-70 hover:border-orange-500/40 hover:opacity-100"
-                        }`}
-                      >
-                        <img
-                          src={img}
-                          alt={`${product.name} ${
-                            index + 1
-                          }`}
-                          className="h-full w-full object-cover"
-                        />
+                    {activeImage === index && (
+                      <div className="absolute inset-0 bg-orange-500/10" />
+                    )}
 
-                        {activeImage ===
-                          index && (
-                          <div className="absolute inset-0 bg-orange-500/10" />
-                        )}
-
-                        <span className="absolute bottom-2 left-2 rounded-lg bg-black/70 px-2 py-1 text-[9px] font-black text-white">
-                          {index + 1}
-                        </span>
-                      </button>
-                    )
-                  )}
-
+                    <span className="absolute bottom-1 left-1 rounded-md bg-black/70 px-1.5 py-0.5 text-[8px] font-black text-white">
+                      {index + 1}
+                    </span>
+                  </button>
+                ))}
               </div>
             )}
 
@@ -538,40 +438,31 @@ Please confirm my order. Thank you!`
                 TRUST CARDS
             ===================================================== */}
 
-            <div className="mt-4 grid grid-cols-3 gap-3">
-
-              <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-4 text-center transition hover:border-orange-500/30">
-
+            <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+              <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-3 text-center transition hover:border-orange-500/30 sm:p-4">
                 <FaTruck className="mx-auto text-sm text-orange-500" />
 
-                <p className="mt-2 text-[9px] font-black uppercase tracking-wider text-gray-500">
+                <p className="mt-2 text-[8px] font-black uppercase tracking-wider text-gray-500 sm:text-[9px]">
                   Fast Delivery
                 </p>
-
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-4 text-center transition hover:border-orange-500/30">
-
+              <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-3 text-center transition hover:border-orange-500/30 sm:p-4">
                 <FaShieldAlt className="mx-auto text-sm text-orange-500" />
 
-                <p className="mt-2 text-[9px] font-black uppercase tracking-wider text-gray-500">
+                <p className="mt-2 text-[8px] font-black uppercase tracking-wider text-gray-500 sm:text-[9px]">
                   Secure Order
                 </p>
-
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-4 text-center transition hover:border-orange-500/30">
-
+              <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-3 text-center transition hover:border-orange-500/30 sm:p-4">
                 <FaUndo className="mx-auto text-sm text-orange-500" />
 
-                <p className="mt-2 text-[9px] font-black uppercase tracking-wider text-gray-500">
+                <p className="mt-2 text-[8px] font-black uppercase tracking-wider text-gray-500 sm:text-[9px]">
                   Easy Support
                 </p>
-
               </div>
-
             </div>
-
           </div>
 
           {/* =====================================================
@@ -580,79 +471,57 @@ Please confirm my order. Thank you!`
 
           <div className="flex flex-col justify-center">
 
-            {/* CATEGORY */}
-
+            {/* Category */}
             {product.category && (
               <div className="mb-4 flex items-center gap-2">
-
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
 
                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-500">
                   {product.category}
                 </p>
-
               </div>
             )}
 
-            {/* TITLE */}
-
+            {/* Title */}
             <h1 className="text-3xl font-black leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl">
               {product.name}
             </h1>
 
-            {/* RATING */}
-
+            {/* Rating */}
             <div className="mt-5 flex items-center gap-2">
-
               <div className="flex gap-1">
-
-                {[1, 2, 3, 4, 5].map(
-                  (star) => (
-                    <FaStar
-                      key={star}
-                      className="text-[11px] text-orange-400"
-                    />
-                  )
-                )}
-
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <FaStar
+                    key={star}
+                    className="text-[11px] text-orange-400"
+                  />
+                ))}
               </div>
 
               <span className="text-xs font-semibold text-gray-500">
                 5.0
               </span>
 
-              <span className="text-gray-700">
-                •
-              </span>
+              <span className="text-gray-700">•</span>
 
               <span className="text-xs text-gray-500">
                 Customer Favorite
               </span>
-
             </div>
 
-            {/* PRICE */}
-
-            <div className="mt-7 rounded-2xl border border-orange-500/20 bg-orange-500/[0.04] p-6">
-
+            {/* Price */}
+            <div className="mt-7 rounded-2xl border border-orange-500/20 bg-orange-500/[0.04] p-5 sm:p-6">
               <div className="flex flex-wrap items-end gap-3">
-
                 <span className="text-3xl font-black text-orange-500 sm:text-4xl">
                   Rs.{" "}
-                  {Number(
-                    product.price || 0
-                  ).toLocaleString()}
+                  {Number(product.price || 0).toLocaleString()}
                 </span>
 
                 {product.oldPrice &&
-                  Number(
-                    product.oldPrice
-                  ) > 0 && (
+                  Number(product.oldPrice) > 0 && (
                     <span className="mb-1 text-sm text-gray-600 line-through">
                       Rs.{" "}
-                      {Number(
-                        product.oldPrice
-                      ).toLocaleString()}
+                      {Number(product.oldPrice).toLocaleString()}
                     </span>
                   )}
 
@@ -661,53 +530,41 @@ Please confirm my order. Thank you!`
                     SAVE {discount}%
                   </span>
                 )}
-
               </div>
 
               <p className="mt-2 text-[10px] font-bold uppercase tracking-wider text-gray-600">
                 Cash on Delivery Available
               </p>
-
             </div>
 
             <div className="my-7 h-px bg-white/10" />
 
-            {/* DETAILS */}
-
+            {/* Details */}
             <div>
-
               <div className="flex items-center gap-2">
-
                 <span className="h-5 w-1 rounded-full bg-orange-500" />
 
                 <h2 className="text-sm font-black uppercase tracking-[0.2em]">
                   Product Details
                 </h2>
-
               </div>
 
               <p className="mt-4 text-sm leading-7 text-gray-500">
                 {product.description ||
                   "Premium quality product carefully selected for the Styles Bazar collection."}
               </p>
-
             </div>
 
-            {/* QUANTITY */}
-
+            {/* Quantity */}
             <div className="mt-7">
-
               <p className="mb-3 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
                 Quantity
               </p>
 
               <div className="flex w-fit items-center overflow-hidden rounded-xl border border-white/10 bg-[#0d0d0d]">
-
                 <button
                   type="button"
-                  onClick={
-                    decreaseQuantity
-                  }
+                  onClick={decreaseQuantity}
                   className="flex h-12 w-12 items-center justify-center text-gray-500 transition hover:bg-orange-500 hover:text-white"
                   aria-label="Decrease quantity"
                 >
@@ -720,78 +577,56 @@ Please confirm my order. Thank you!`
 
                 <button
                   type="button"
-                  onClick={
-                    increaseQuantity
-                  }
+                  onClick={increaseQuantity}
                   className="flex h-12 w-12 items-center justify-center text-gray-500 transition hover:bg-orange-500 hover:text-white"
                   aria-label="Increase quantity"
                 >
                   <FaPlus className="text-[9px]" />
                 </button>
-
               </div>
-
             </div>
 
-            {/* TOTAL */}
-
+            {/* Total */}
             <div className="mt-5 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.025] px-5 py-4">
-
               <span className="text-xs font-bold uppercase tracking-wider text-gray-600">
                 Total
               </span>
 
               <span className="text-lg font-black">
-                Rs.{" "}
-                {totalPrice.toLocaleString()}
+                Rs. {totalPrice.toLocaleString()}
               </span>
-
             </div>
 
-            {/* BUTTONS */}
+            {/* =====================================================
+                DESKTOP BUTTONS
+                Mobile par neeche sticky bar use hogi.
+            ===================================================== */}
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-
-              {/* CART */}
-
+            <div className="mt-5 hidden gap-3 sm:grid sm:grid-cols-2">
               <button
                 type="button"
-                onClick={
-                  handleAddToCart
-                }
+                onClick={handleAddToCart}
                 className="flex items-center justify-center gap-3 rounded-2xl border border-orange-500/30 bg-orange-500/[0.08] py-4 text-sm font-black text-orange-500 transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:text-white"
               >
                 <FaShoppingBag />
-
                 Add to Cart
               </button>
 
-              {/* ORDER */}
-
               <button
                 type="button"
-                onClick={
-                  handleOrderNow
-                }
+                onClick={handleOrderNow}
                 className="flex items-center justify-center gap-3 rounded-2xl bg-orange-500 py-4 text-sm font-black text-white shadow-[0_10px_30px_rgba(249,115,22,0.2)] transition-all hover:-translate-y-0.5 hover:bg-orange-600"
               >
                 <FaBolt />
-
                 Order Now
               </button>
-
             </div>
 
-            {/* WISHLIST */}
-
+            {/* Wishlist */}
             <button
               type="button"
-              onClick={() =>
-                addToWishlist(
-                  product
-                )
-              }
-              className={`mt-3 flex items-center justify-center gap-3 rounded-2xl border py-4 text-sm font-black transition ${
+              onClick={() => addToWishlist(product)}
+              className={`mt-3 hidden items-center justify-center gap-3 rounded-2xl border py-4 text-sm font-black transition sm:flex ${
                 saved
                   ? "border-red-500 bg-red-500 text-white"
                   : "border-white/10 bg-white/[0.03] text-white hover:border-orange-500/40 hover:text-orange-400"
@@ -804,31 +639,25 @@ Please confirm my order. Thank you!`
                 : "Add to Wishlist"}
             </button>
 
-            {/* CART LINK */}
-
+            {/* Cart Link */}
             <Link
               href="/cart"
-              className="mt-3 flex items-center justify-center gap-3 rounded-2xl border border-white/10 py-4 text-sm font-black text-gray-400 transition hover:border-orange-500/40 hover:text-orange-500"
+              className="mt-3 hidden items-center justify-center gap-3 rounded-2xl border border-white/10 py-4 text-sm font-black text-gray-400 transition hover:border-orange-500/40 hover:text-orange-500 sm:flex"
             >
               <FaShoppingBag />
-
               View Shopping Cart
             </Link>
 
-            {/* BENEFITS */}
-
+            {/* Benefits */}
             <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.025] p-5">
-
               <div className="grid gap-4 sm:grid-cols-2">
 
                 <div className="flex items-start gap-3">
-
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">
                     <FaCheck className="text-[10px]" />
                   </span>
 
                   <div>
-
                     <p className="text-xs font-black">
                       Cash on Delivery
                     </p>
@@ -836,19 +665,15 @@ Please confirm my order. Thank you!`
                     <p className="mt-1 text-[11px] leading-5 text-gray-600">
                       Pay when your order arrives.
                     </p>
-
                   </div>
-
                 </div>
 
                 <div className="flex items-start gap-3">
-
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">
                     <FaTruck className="text-[10px]" />
                   </span>
 
                   <div>
-
                     <p className="text-xs font-black">
                       Delivery Across Pakistan
                     </p>
@@ -856,19 +681,56 @@ Please confirm my order. Thank you!`
                     <p className="mt-1 text-[11px] leading-5 text-gray-600">
                       Delivered to your doorstep.
                     </p>
-
                   </div>
-
                 </div>
 
               </div>
-
             </div>
-
           </div>
-
         </div>
+      </div>
 
+      {/* =====================================================
+          MOBILE STICKY ACTION BAR
+      ===================================================== */}
+
+      <div className="fixed bottom-0 left-0 right-0 z-[80] border-t border-white/10 bg-[#0b0b0b]/95 p-3 shadow-[0_-15px_50px_rgba(0,0,0,0.65)] backdrop-blur-xl sm:hidden">
+        <div className="mx-auto flex max-w-lg items-center gap-2">
+
+          {/* Wishlist */}
+          <button
+            type="button"
+            onClick={() => addToWishlist(product)}
+            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border transition ${
+              saved
+                ? "border-red-500 bg-red-500 text-white"
+                : "border-white/10 bg-white/[0.04] text-gray-300"
+            }`}
+            aria-label="Wishlist"
+          >
+            <FaHeart className="text-sm" />
+          </button>
+
+          {/* Cart */}
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl border border-orange-500/30 bg-orange-500/10 px-3 text-xs font-black text-orange-500 transition active:scale-[0.98]"
+          >
+            <FaShoppingBag />
+            Cart
+          </button>
+
+          {/* Order */}
+          <button
+            type="button"
+            onClick={handleOrderNow}
+            className="flex h-12 flex-[1.5] items-center justify-center gap-2 rounded-xl bg-orange-500 px-3 text-xs font-black text-white shadow-[0_8px_25px_rgba(249,115,22,0.25)] transition active:scale-[0.98]"
+          >
+            <FaBolt />
+            Order Now
+          </button>
+        </div>
       </div>
 
       {/* =====================================================
@@ -880,15 +742,10 @@ Please confirm my order. Thank you!`
 
           <div className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-[28px] border border-white/10 bg-[#111111] p-6 shadow-[0_30px_100px_rgba(0,0,0,0.8)] sm:p-8">
 
-            {/* CLOSE */}
-
+            {/* Close */}
             <button
               type="button"
-              onClick={() =>
-                setShowOrderForm(
-                  false
-                )
-              }
+              onClick={() => setShowOrderForm(false)}
               className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-gray-500 transition hover:bg-orange-500 hover:text-white"
               aria-label="Close order form"
             >
@@ -896,7 +753,6 @@ Please confirm my order. Thank you!`
             </button>
 
             <div className="pr-12">
-
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-orange-500">
                 Styles Bazar
               </p>
@@ -906,189 +762,131 @@ Please confirm my order. Thank you!`
               </h2>
 
               <p className="mt-2 text-xs leading-5 text-gray-500">
-                Enter your delivery details.
-                After submitting, your order
-                will open in WhatsApp for
-                confirmation.
+                Enter your delivery details. After submitting,
+                your order will open in WhatsApp for confirmation.
               </p>
-
             </div>
 
-            {/* PRODUCT SUMMARY */}
-
+            {/* Product Summary */}
             <div className="mt-6 flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-
               <img
                 src={currentImage}
-                alt={
-                  product.name ||
-                  "Product"
-                }
+                alt={product.name || "Product"}
                 className="h-20 w-20 rounded-xl object-cover"
               />
 
               <div className="min-w-0">
-
                 <h3 className="line-clamp-2 text-sm font-bold">
                   {product.name}
                 </h3>
 
                 <p className="mt-1 text-xs text-gray-500">
-                  Quantity:{" "}
-                  {quantity}
+                  Quantity: {quantity}
                 </p>
 
                 <p className="mt-1 text-sm font-black text-orange-500">
-                  Rs.{" "}
-                  {totalPrice.toLocaleString()}
+                  Rs. {totalPrice.toLocaleString()}
                 </p>
-
               </div>
-
             </div>
 
-            {/* FORM */}
-
+            {/* Form */}
             <form
-              onSubmit={
-                handleWhatsAppOrder
-              }
+              onSubmit={handleWhatsAppOrder}
               className="mt-6 space-y-4"
             >
 
-              {/* NAME */}
-
+              {/* Name */}
               <div>
-
                 <label className="mb-2 block text-[10px] font-black uppercase tracking-wider text-gray-500">
                   Full Name
                 </label>
 
                 <div className="flex items-center rounded-xl border border-white/10 bg-[#0b0b0b] px-4 focus-within:border-orange-500/50">
-
                   <FaUser className="mr-3 text-xs text-gray-600" />
 
                   <input
                     type="text"
                     value={name}
-                    onChange={(e) =>
-                      setName(
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Enter your name"
                     className="w-full bg-transparent py-4 text-sm text-white outline-none placeholder:text-gray-700"
                     required
                   />
-
                 </div>
-
               </div>
 
-              {/* PHONE */}
-
+              {/* Phone */}
               <div>
-
                 <label className="mb-2 block text-[10px] font-black uppercase tracking-wider text-gray-500">
                   Phone Number
                 </label>
 
                 <div className="flex items-center rounded-xl border border-white/10 bg-[#0b0b0b] px-4 focus-within:border-orange-500/50">
-
                   <FaPhone className="mr-3 text-xs text-gray-600" />
 
                   <input
                     type="tel"
                     value={phone}
-                    onChange={(e) =>
-                      setPhone(
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => setPhone(e.target.value)}
                     placeholder="03XXXXXXXXX"
                     className="w-full bg-transparent py-4 text-sm text-white outline-none placeholder:text-gray-700"
                     required
                   />
-
                 </div>
-
               </div>
 
-              {/* CITY */}
-
+              {/* City */}
               <div>
-
                 <label className="mb-2 block text-[10px] font-black uppercase tracking-wider text-gray-500">
                   City
                 </label>
 
                 <div className="flex items-center rounded-xl border border-white/10 bg-[#0b0b0b] px-4 focus-within:border-orange-500/50">
-
                   <FaMapMarkerAlt className="mr-3 text-xs text-gray-600" />
 
                   <input
                     type="text"
                     value={city}
-                    onChange={(e) =>
-                      setCity(
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => setCity(e.target.value)}
                     placeholder="Your city"
                     className="w-full bg-transparent py-4 text-sm text-white outline-none placeholder:text-gray-700"
                     required
                   />
-
                 </div>
-
               </div>
 
-              {/* ADDRESS */}
-
+              {/* Address */}
               <div>
-
                 <label className="mb-2 block text-[10px] font-black uppercase tracking-wider text-gray-500">
                   Complete Address
                 </label>
 
                 <textarea
                   value={address}
-                  onChange={(e) =>
-                    setAddress(
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => setAddress(e.target.value)}
                   placeholder="House number, street, area..."
                   rows={3}
                   className="w-full resize-none rounded-xl border border-white/10 bg-[#0b0b0b] px-4 py-4 text-sm text-white outline-none placeholder:text-gray-700 focus:border-orange-500/50"
                   required
                 />
-
               </div>
 
-              {/* SUBMIT */}
-
+              {/* Submit */}
               <button
                 type="submit"
                 className="flex w-full items-center justify-center gap-3 rounded-2xl bg-orange-500 py-4 text-sm font-black text-white shadow-[0_10px_30px_rgba(249,115,22,0.2)] transition hover:bg-orange-600"
               >
-
                 <FaWhatsapp className="text-lg" />
-
                 Continue to WhatsApp
-
               </button>
 
               <p className="text-center text-[10px] leading-5 text-gray-600">
-                Your order details will be
-                prepared and opened in WhatsApp
-                for confirmation.
+                Your order details will be prepared and opened
+                in WhatsApp for confirmation.
               </p>
-
             </form>
-
           </div>
-
         </div>
       )}
 
@@ -1107,8 +905,7 @@ Please confirm my order. Thank you!`
         </h2>
 
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-gray-600">
-          Add it to your cart or order
-          directly through WhatsApp.
+          Add it to your cart or order directly through WhatsApp.
         </p>
 
         <Link
@@ -1116,12 +913,10 @@ Please confirm my order. Thank you!`
           className="mt-6 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-6 py-3 text-sm font-black text-gray-300 transition hover:border-orange-500/40 hover:bg-orange-500/10 hover:text-orange-500"
         >
           Continue Shopping
-
           <FaArrowLeft className="text-[10px]" />
         </Link>
 
       </section>
-
     </main>
   );
 }
